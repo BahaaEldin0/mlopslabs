@@ -1,0 +1,27 @@
+# Use Miniconda base image
+FROM continuumio/miniconda3
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the Conda environment file
+COPY environment.yaml /app/environment.yaml
+
+# Install the Conda environment
+RUN conda env create -f environment.yaml
+
+# Make RUN commands use the new environment:
+SHELL ["conda", "run", "-n", "your_env_name", "/bin/bash", "-c"]
+
+# Copy the rest of your application's code
+COPY . /app
+
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
+
+# Define environment variable to point to the Flask application
+ENV FLASK_APP=server.py
+ENV FLASK_RUN_HOST=0.0.0.0
+
+# The CMD command that runs your application
+CMD ["conda", "run", "-n", "your_env_name", "flask", "run"]
