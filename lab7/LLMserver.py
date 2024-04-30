@@ -6,7 +6,7 @@ from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
 import torch
 
 app = Flask(__name__)
-
+global llm
 # Model and tokenizer setup with LangChain
 def create_model_and_tokenizer():
     model_name = "NousResearch/llama-2-7b-chat-hf"
@@ -42,7 +42,7 @@ def create_model_and_tokenizer():
 
     # Load the model with your specific configurations if needed
     # This step may need to be adjusted based on your model's setup
-    model = PeftModel.from_pretrained(model, 'NousResearch/llama-2-7b-chat-hf')
+    #model = PeftModel.from_pretrained(model, 'NousResearch/llama-2-7b-chat-hf')
     
     generation_config = GenerationConfig.from_pretrained(model_name)
     generation_config.max_new_tokens = 512
